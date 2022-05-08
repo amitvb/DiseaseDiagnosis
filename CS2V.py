@@ -7,6 +7,7 @@ from gensim.models import fasttext
 
 import numpy
 import numpy as np
+import pandas as pd
 import sent2vec
 import sklearn
 from scipy import spatial
@@ -58,6 +59,7 @@ for topk in range(TOP_K_LOWER_BOUND, TOP_K_UPPER_BOUND, TOP_K_INCR):
 ################################################################################################################
 #OUTPUT DIRECTORIES
 ################################################################################################################
+directory_dataset_root = os.getcwd() + '/Dataset'
 directory_prediction_root = os.getcwd() + '/Prediction Output_' + util_cy.current_time().replace('/','') + '/'
 directory_prediction_details_root = os.getcwd() + '/Prediction Symptom Details_' + util_cy.current_time().replace('/','') + '/'
 shutil.rmtree(directory_prediction_root, ignore_errors=True)
@@ -65,6 +67,23 @@ shutil.rmtree(directory_prediction_details_root, ignore_errors=True)
 Path(directory_prediction_root).mkdir(parents=True, exist_ok=True)
 Path(directory_prediction_details_root).mkdir(parents=True, exist_ok=True)
 performance_out_file = open(directory_prediction_root + '/PerformanceIndex.txt', 'w')
+
+
+df = pd.read_csv(file_name, sep=";", header=None)
+kf = KFold(K_FOLD)
+fold = 0
+for train_index, test_index in kf.split(df):
+    directory_dataset = directory_dataset_root + '/Fold' + str(fold) + "/"
+    shutil.rmtree(directory_dataset, ignore_errors=True)
+    Path(directory_dataset).mkdir(parents=True, exist_ok=True)
+
+    trainDF = pd.DataFrame(df.iloc[train_index])
+    trainDF = trainDF.iloc[:, 0].astype(str) + '_' + trainDF.iloc[:, 4] + '.'
+    testDF = pd.DataFrame(df.iloc[test_index])
+    testDF = testDF.iloc[:, 0].astype(str) + '_' + testDF.iloc[:, 4] + '.'
+    trainDF.to_csv(directory_dataset + '/TrainingSet.txt', index=False, header=False, sep=';')
+    testDF.to_csv(directory_dataset + '/TestSet.txt', index=False, header=False, sep=';')
+    fold = fold + 1
 
 ################################################################################################################
 # WORK ON SINGLE FOLD
@@ -76,6 +95,11 @@ for nFold in range(0,K_FOLD):
     shutil.rmtree(directory_prediction_details, ignore_errors=True)
     Path(directory_prediction).mkdir(parents=True, exist_ok=True)
     Path(directory_prediction_details).mkdir(parents=True, exist_ok=True)
+
+    
+
+
+
     ##########################################################################################################
     # LOAD TRAIN AND TEST SET
     ##########################################################################################################

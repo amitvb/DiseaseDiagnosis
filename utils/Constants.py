@@ -1,6 +1,6 @@
 #COSTANT
 
-CH_DIR = "/Users/abhagwa2/diseaseDiagnosis"
+CH_DIR = "/Users/abhagwa2/Documents/personal/MCS/DL4H/diseaseDiagnosis/DiseaseDiagnosis"
 FMT = "%d/%m/%Y %H:%M:%S"
 TRAIN = 'TrainingSet.txt'
 TEST = 'TestSet.txt'

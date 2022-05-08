@@ -201,9 +201,9 @@ def predictS2V(i, index, test_admission, test_symptoms, x_train, nrow, ncol, emb
             max = similarity_matrix[i, j]             # <<<<<<<<<<<<<<
             max_index = j
     gt_diagnosis = test_admission.diagnosis
-    print("Max similarity of Symptoms = " + str(max))
-    print("List of Symptoms to predict: " + str(index) + ": " + str(test_symptoms))
-    print("GT diagnosis: " + str(gt_diagnosis))
+    # print("Max similarity of Symptoms = " + str(max))
+    # print("List of Symptoms to predict: " + str(index) + ": " + str(test_symptoms))
+    # print("GT diagnosis: " + str(gt_diagnosis))
     if max_index != -1:             # <<<<<<<<<<<<<<
         most_similar_index = list(x_train[max_index].keys())[0]
         most_similar_symptoms = list(x_train[max_index].values())[0]
@@ -211,8 +211,8 @@ def predictS2V(i, index, test_admission, test_symptoms, x_train, nrow, ncol, emb
         most_similar_admission = admissions.get(most_similar_index)
         predicted_diagnosis = most_similar_admission.diagnosis
         diagnosis_similarity_max = get_diagnosis_similarity_by_description_max(embendings_diagnosis, gt_diagnosis, predicted_diagnosis, 'cosine')
-        print("Predicted diagnosis: " + str(predicted_diagnosis))
-        print("Diagnosis Similarity Max: " + str(diagnosis_similarity_max))
+        # print("Predicted diagnosis: " + str(predicted_diagnosis))
+        # print("Diagnosis Similarity Max: " + str(diagnosis_similarity_max))
         # UPDATE CONFUSION MATRIX
         for b in {1, 0.9, 0.8, 0.7, 0.6}:             # <<<<<<<<<<<<<<
             """
