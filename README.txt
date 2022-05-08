@@ -1,6 +1,6 @@
 CS2V.py: Main class 
 
-util_cy.c: class containing all methods inmplemented through Cython
+util_cy.py: class containing all methods
 
 utils: folder containing utility files
 
