@@ -1,5 +1,5 @@
 ## Execution
-Run ```python3 CS2V.py```
+Run ``python3 CS2V.py``
 
 ## Info
 CS2V.py: Main class 
